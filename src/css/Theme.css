@@ -1,0 +1,15 @@
+.navbar-main {
+  background-color: #e5e5f0;
+}
+
+.brand-text {
+  font-family: Verdana, Tahoma, sans-serif, "Lucida Sans", "Lucida Sans Regular",
+    "Lucida Grande";
+  font-weight: 700;
+  font-style: italic;
+}
+
+.active {
+  font-weight: 500;
+  letter-spacing: 1px;
+}
