@@ -19,13 +19,13 @@ const NavbarComponent = (props) => {
   const pathname = useLocation().pathname;
 
   return (
-    <div>
+    <>
       <PromoBanner />
-      <Navbar className="navbar-main" light expand="md" sticky="top">
-        <NavbarBrand className="brand-name" href="/">
+      <Navbar className="navbar-main" light expand="lg" sticky="top">
+        <NavbarBrand className="brand-name mr-auto" href="/">
           <img
-            width="50"
-            height="45"
+            width="35"
+            height="35"
             src="\assets\images\brand-logo.png"
             alt="brand-logo"
           />{" "}
@@ -78,19 +78,19 @@ const NavbarComponent = (props) => {
                 CAREERS
               </NavLink>
             </NavItem>
-            <NavItem className="my-2 my-md-auto ml-md-3" role="button">
+            <NavItem className="mb-2 my-lg-auto ml-lg-3" role="button">
               <i className="fa fa-shopping-cart" /> Cart
             </NavItem>
-            <NavItem className="my-2 my-md-auto ml-md-3" role="button">
+            <NavItem className="mb-2 my-lg-auto ml-lg-2" role="button">
               <i className="fa fa-heart" /> Wishlist
             </NavItem>
-            <NavItem className="my-auto ml-md-3" role="button">
-              <i className="fa fa-shopping-cart" /> Login
+            <NavItem className="my-auto ml-lg-3" role="button">
+              <i className="fa fa-user" /> Login
             </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,9 @@
-.navbar-main {
+.navbar-main, .footer {
   background-color: #e5e5f0;
+}
+
+.footer {
+  margin-top: 5px;
 }
 
 .brand-text {
