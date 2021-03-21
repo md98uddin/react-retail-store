@@ -3,10 +3,8 @@ import {
   Card,
   CardImg,
   CardBody,
-  CardText,
   CardSubtitle,
   Button,
-  ButtonGroup,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -43,7 +41,7 @@ const ProductCard = (props) => {
                 <DropdownItem Header>Size</DropdownItem>
                 {props.product.sizingType.split(",").map((size, index) => (
                   <DropdownItem
-                    disabled={props.product.stock.split(",")[index] == 0}
+                    disabled={props.product.stock.split(",")[index] ==  0}
                     key={size}
                   >
                     {size}
