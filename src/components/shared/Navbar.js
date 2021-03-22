@@ -11,18 +11,34 @@ import {
 } from "reactstrap";
 import PromoBanner from "./PromoBanner";
 import "../../css/Theme.css";
-import LoginModal from "../LoginModal";
+import LoginModal from "../Auth";
 
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, toggleModal] = useState(false);
+  const [isLoginOpen, toggleLoginModal] = useState(false);
+  const [isRegisterOpen, toggleRegisterModal] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-  const toggleLogin = () => toggleModal(!isModalOpen);
 
+  const toggleLogin = () => {
+    toggleLoginModal(!isLoginOpen);
+    if (isRegisterOpen) {
+      toggleRegister(false);
+    }
+  };
+
+  const toggleRegister = () => {
+    toggleRegisterModal(!isRegisterOpen);
+    if (isLoginOpen) {
+      toggleLogin(false);
+    }
+  };
   const submitLogin = (values) => {
     props.loginUser(values);
-    console.log(values);
+  };
+
+  const submitRegister = (values) => {
+    props.loginUser(values);
   };
 
   const logoutUser = () => {
@@ -120,9 +136,12 @@ const NavbarComponent = (props) => {
       </Navbar>
       <LoginModal
         user={props.user}
-        toggle={toggleLogin}
-        isModalOpen={isModalOpen}
+        toggleLogin={toggleLogin}
+        toggleRegister={toggleRegister}
+        isLoginOpen={isLoginOpen}
+        isRegisterOpen={isRegisterOpen}
         submitLogin={submitLogin}
+        submitRegister={submitRegister}
       />
     </>
   );

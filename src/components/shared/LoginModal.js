@@ -13,12 +13,18 @@ import {
 
 const required = (val) => val;
 
-const RenderLoginModal = ({ user, isModalOpen, toggleModal, submitLogin }) => {
+const RenderLoginModal = ({
+  user,
+  isModalOpen,
+  toggleLogin,
+  toggleRegister,
+  submitLogin,
+}) => {
   if (!user) {
     return (
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <Modal isOpen={isModalOpen} toggle={toggleLogin}>
         <ModalHeader
-          toggle={toggleModal}
+          toggle={toggleLogin}
           style={{ backgroundColor: "#e5e5f0" }}
         >
           Login to Rockstar
@@ -84,6 +90,10 @@ const RenderLoginModal = ({ user, isModalOpen, toggleModal, submitLogin }) => {
                 >
                   LOGIN
                 </Button>
+                <br />
+                <a className="mt-2" role="button" onClick={toggleRegister}>
+                  or, create an account
+                </a>
               </Container>
             </Container>
           </LocalForm>
@@ -95,17 +105,4 @@ const RenderLoginModal = ({ user, isModalOpen, toggleModal, submitLogin }) => {
   return <div />;
 };
 
-const LoginModal = (props) => {
-  return (
-    !props.user && (
-      <RenderLoginModal
-        user={props.user}
-        isModalOpen={props.isModalOpen}
-        toggleModal={props.toggle}
-        submitLogin={props.submitLogin}
-      />
-    )
-  );
-};
-
-export default LoginModal;
+export default RenderLoginModal;
