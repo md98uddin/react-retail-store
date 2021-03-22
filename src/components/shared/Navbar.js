@@ -11,10 +11,24 @@ import {
 } from "reactstrap";
 import PromoBanner from "./PromoBanner";
 import "../../css/Theme.css";
+import LoginModal from "../LoginModal";
 
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, toggleModal] = useState(false);
+
   const toggle = () => setIsOpen(!isOpen);
+  const toggleLogin = () => toggleModal(!isModalOpen);
+
+  const submitLogin = (values) => {
+    props.loginUser(values);
+    console.log(values);
+  };
+
+  const logoutUser = () => {
+    props.logoutUser();
+    toggleLogin();
+  };
 
   const pathname = useLocation().pathname;
 
@@ -84,12 +98,32 @@ const NavbarComponent = (props) => {
             <NavItem className="mb-2 my-lg-auto ml-lg-2" role="button">
               <i className="fa fa-heart" /> Wishlist
             </NavItem>
-            <NavItem className="my-auto ml-lg-3" role="button">
-              <i className="fa fa-user" /> Login
-            </NavItem>
+            {!props.user ? (
+              <NavItem
+                className="my-auto ml-lg-3"
+                role="button"
+                onClick={toggleLogin}
+              >
+                <i className="fa fa-user" /> Login
+              </NavItem>
+            ) : (
+              <NavItem
+                className="my-auto ml-lg-2"
+                role="button"
+                onClick={logoutUser}
+              >
+                <i class="fa fa-paper-plane" /> Log Out
+              </NavItem>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
+      <LoginModal
+        user={props.user}
+        toggle={toggleLogin}
+        isModalOpen={isModalOpen}
+        submitLogin={submitLogin}
+      />
     </>
   );
 };

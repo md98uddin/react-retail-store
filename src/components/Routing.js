@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { loginUser, logoutUser, registerUser } from "../redux/actions";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
 import ProductsMen from "./ProductsMen";
-import CareersListing from './CareersListing'
+import CareersListing from "./CareersListing";
 
 const mapStateToProps = (state) => {
   return {
     products: state.products,
-    careers:state.careers
+    careers: state.careers,
+    user: state.user,
   };
 };
 
@@ -19,15 +21,20 @@ class Routing extends Component {
       return <ProductsMen products={this.props.products} />;
     };
 
-    const CareersPage=()=>{
-      return <CareersListing careers={this.props.careers}/>
-    }
+    const CareersPage = () => {
+      return <CareersListing careers={this.props.careers} />;
+    };
     return (
       <React.Fragment>
-        <Navbar />
+        <Navbar
+          user={this.props.user}
+          loginUser={this.props.loginUser}
+          registerUser={this.props.registerUser}
+          logoutUser={this.props.logoutUser}
+        />
         <Switch>
           <Route exact path="/collections/mens" component={ProductsMenPage} />
-          <Route exact path="/careers" component={CareersPage}/>
+          <Route exact path="/careers" component={CareersPage} />
           <Redirect to="/" />
         </Switch>
         <Footer />
@@ -36,4 +43,18 @@ class Routing extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Routing));
+function mapDispatch(dispatch) {
+  return {
+    loginUser: (user) => {
+      dispatch(loginUser(user));
+    },
+    registerUser: (user) => {
+      dispatch(registerUser(user));
+    },
+    logoutUser: () => {
+      dispatch(logoutUser());
+    },
+  };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatch)(Routing));

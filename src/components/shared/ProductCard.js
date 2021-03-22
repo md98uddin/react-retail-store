@@ -18,8 +18,6 @@ const ProductCard = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
-  console.log("props", props);
   return (
     props.product && (
       <Col xs="12" sm="6" lg="4">
@@ -38,10 +36,10 @@ const ProductCard = (props) => {
                 {props.product.sizingType.split(",")[0]}
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem Header>Size</DropdownItem>
+                <DropdownItem header>Size</DropdownItem>
                 {props.product.sizingType.split(",").map((size, index) => (
                   <DropdownItem
-                    disabled={props.product.stock.split(",")[index] ==  0}
+                    disabled={props.product.stock.split(",")[index] == 0}
                     key={size}
                   >
                     {size}

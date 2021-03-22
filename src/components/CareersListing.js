@@ -24,7 +24,7 @@ const maxLength = (len) => (val) => !val || val.length <= len;
 const validEmail = (val) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
-const RenderCareers = ({ careers, toggleCareer, toggleModal }) => {
+const RenderCareers = ({ careers, toggleModal }) => {
   if (careers) {
     return careers.map((career) => (
       <Col xs="12" lg="6" key={career.id}>
@@ -239,9 +239,6 @@ function CareersListing(props) {
       setAlert(false);
     }, 7500);
   };
-
-  console.log("modal", isModalOpen);
-  console.log("career", career);
 
   return (
     props.careers && (
