@@ -12,11 +12,15 @@ import {
 import PromoBanner from "./PromoBanner";
 import "../../css/Theme.css";
 import LoginModal from "../Auth";
+import Cart from "../CartModal";
 
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginOpen, toggleLoginModal] = useState(false);
   const [isRegisterOpen, toggleRegisterModal] = useState(false);
+  const [isCartOpen, toggleCartModal] = useState(false);
+  const [isProductOpen, setProduct] = useState(false);
+  const [popOverProduct, setPopover] = useState(props.cart[0]);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -33,6 +37,20 @@ const NavbarComponent = (props) => {
       toggleLogin(false);
     }
   };
+
+  const toggleCart = () => {
+    toggleCartModal(!isCartOpen);
+  };
+
+  const toggleProduct = (product) => {
+    setProduct(!isProductOpen);
+    setPopover(product);
+
+    setTimeout(() => {
+      setProduct(false);
+    }, 1750);
+  };
+
   const submitLogin = (values) => {
     props.loginUser(values);
   };
@@ -108,7 +126,11 @@ const NavbarComponent = (props) => {
                 CAREERS
               </NavLink>
             </NavItem>
-            <NavItem className="mb-2 my-lg-auto ml-lg-3" role="button">
+            <NavItem
+              className="mb-2 my-lg-auto ml-lg-3"
+              role="button"
+              onClick={toggleCart}
+            >
               <i className="fa fa-shopping-cart" /> Cart
             </NavItem>
             <NavItem className="mb-2 my-lg-auto ml-lg-2" role="button">
@@ -142,6 +164,15 @@ const NavbarComponent = (props) => {
         isRegisterOpen={isRegisterOpen}
         submitLogin={submitLogin}
         submitRegister={submitRegister}
+      />
+      <Cart
+        cart={props.cart}
+        isModalOpen={isCartOpen}
+        toggleCart={toggleCart}
+        isProductOpen={isProductOpen}
+        togglePopover={toggleProduct}
+        product={popOverProduct}
+        removeFromCart={props.removeProduct}
       />
     </>
   );

@@ -1,15 +1,4 @@
-import React, { useState } from "react";
-import { Control, LocalForm, Errors } from "react-redux-form";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row,
-  Col,
-  Container,
-  Label,
-} from "reactstrap";
+import React from "react";
 import RenderRegisterModal from "./shared/RegisterModal";
 import RenderLoginModal from "./shared/LoginModal";
 

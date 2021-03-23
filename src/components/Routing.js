@@ -11,11 +11,28 @@ const mapStateToProps = (state) => {
   return {
     products: state.products,
     careers: state.careers,
+    cart: state.cart,
     user: state.user,
   };
 };
 
 class Routing extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cart: this.props.cart,
+    };
+  }
+
+  removeProduct = (id) => {
+    const updateCart = this.state.cart.filter((item) => item.id !== id);
+
+    this.setState({
+      cart: updateCart,
+    });
+  };
+
   render() {
     const ProductsMenPage = () => {
       return <ProductsMen products={this.props.products} />;
@@ -31,6 +48,8 @@ class Routing extends Component {
           loginUser={this.props.loginUser}
           registerUser={this.props.registerUser}
           logoutUser={this.props.logoutUser}
+          cart={this.state.cart}
+          removeProduct={this.removeProduct}
         />
         <Switch>
           <Route exact path="/collections/mens" component={ProductsMenPage} />

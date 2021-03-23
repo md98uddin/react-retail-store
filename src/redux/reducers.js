@@ -1,10 +1,12 @@
 import { PRODUCTS } from "../product_data";
 import { CAREERS } from "../careers_list";
 import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from "./types";
+import { CART_PRODUCTS } from "../cart_products";
 
 export const initialState = {
   products: PRODUCTS,
   careers: CAREERS,
+  cart:CART_PRODUCTS,
   user: null,
 };
 
