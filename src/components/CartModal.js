@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Container,
@@ -6,39 +7,18 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
 } from "reactstrap";
-
-const RenderPopover = ({ isProductOpen, togglePopover, id, name, image }) => {
-  return (
-    <Popover
-      placement="bottom"
-      isOpen={isProductOpen}
-      target={id}
-      toggle={() => togglePopover({ id, name, image })}
-    >
-      <PopoverHeader>{name}</PopoverHeader>
-      <PopoverBody>
-        <img src={image} alt={name} with={175} height={250} />
-      </PopoverBody>
-    </Popover>
-  );
-};
 
 const Cart = ({
   isModalOpen,
   toggleCart,
   removeFromCart,
   cart,
+  cartTotal,
   togglePopover,
-  isProductOpen,
-  product,
 }) => {
-  console.log("product", product);
   return (
-    <Modal isOpen={isModalOpen} toggle={toggleCart}>
+    <Modal isOpen={isModalOpen} toggle={toggleCart} size="lg">
       <ModalHeader toggle={toggleCart} style={{ backgroundColor: "#e5e5f0" }}>
         My Shop Cart
       </ModalHeader>
@@ -56,22 +36,23 @@ const Cart = ({
             </thead>
             <tbody>
               {cart.map((item) => (
-                <tr key={item.id}>
-                  <Container>
-                    <td
-                      style={{ cursor: "pointer" }}
-                      id={`product${item.id}`}
-                      onClick={() => togglePopover(item)}
-                    >
-                      {item.name}
-                    </td>
-                  </Container>
+                <tr key={item.name + item.size}>
+                  <td
+                    style={{ cursor: "pointer" }}
+                    id={`product${item.id}`}
+                    onClick={() => togglePopover(item)}
+                  >
+                    <span className="mt-5">{item.name}</span>
+                  </td>
                   <td>{item.size}</td>
                   <td>{item.qty}</td>
-                  <td>${item.price}</td>
+                  <td>${item.price * item.qty}</td>
                   <td>
-                    <Button onClick={() => removeFromCart(item.id)}>
-                      <i className="fa fa-trash" />
+                    <Button
+                      onClick={() => removeFromCart(item.id)}
+                      style={{ backgroundColor: "#e5e5f0" }}
+                    >
+                      <i className="fa fa-trash" style={{ color: "#9f9ad8" }} />
                     </Button>
                   </td>
                 </tr>
@@ -81,18 +62,17 @@ const Cart = ({
                 <td></td>
                 <td></td>
                 <td>
-                  <strong>${cart.reduce((a, c) => a + c["price"], 0)}</strong>
+                  <strong>Total ${cartTotal.toFixed(2)}</strong>
                 </td>
               </tr>
             </tbody>
           </Table>
-          <RenderPopover
-            isProductOpen={isProductOpen}
-            id={`product${product.id ? product.id : 1}`}
-            name={product.name}
-            image={product.image}
-            togglePopover={togglePopover}
-          />
+          <Link to="/checkout" onClick={toggleCart}>
+            <Button style={{ backgroundColor: "#e5e5f0", color: "black" }}>
+              <i className="fa fa-shopping-cart" style={{ color: "black" }} />{" "}
+              Check Out
+            </Button>
+          </Link>
         </Container>
       </ModalBody>
     </Modal>

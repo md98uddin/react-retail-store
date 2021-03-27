@@ -6,12 +6,14 @@ import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
 import ProductsMen from "./ProductsMen";
 import CareersListing from "./CareersListing";
+import CheckOut from "./shared/Checkout";
 
 const mapStateToProps = (state) => {
   return {
     products: state.products,
     careers: state.careers,
     cart: state.cart,
+    wishlist: state.wishlist,
     user: state.user,
   };
 };
@@ -22,14 +24,73 @@ class Routing extends Component {
 
     this.state = {
       cart: this.props.cart,
+      wishlist: this.props.wishlist,
+      cartTotal: 0,
     };
   }
 
-  removeProduct = (id) => {
+  componentDidMount() {
+    this.updateCartTotal(this.state.cart);
+  }
+
+  removeFromCart = (id) => {
     const updateCart = this.state.cart.filter((item) => item.id !== id);
 
     this.setState({
       cart: updateCart,
+    });
+
+    this.updateCartTotal(updateCart);
+  };
+
+  removeFromWishList = (id) => {
+    const updateWishList = this.state.wishlist.filter((item) => item.id !== id);
+
+    this.setState({
+      wishlist: updateWishList,
+    });
+  };
+
+  addToCartFromWishList = (product) => {
+    this.removeFromWishList(product.id);
+
+    const itemFound = this.state.cart.filter((item) => {
+      return item.id === product.id && item.size === product.size;
+    });
+
+    var newCart = null;
+
+    if (itemFound.length === 0) {
+      product.qty = 1;
+      newCart = [...this.state.cart, product];
+
+      this.setState({
+        cart: newCart,
+      });
+    } else {
+      itemFound[0].qty++;
+
+      newCart = this.state.cart.filter((item) => {
+        return item.id + item.size !== product.id + product.size;
+      });
+
+      this.setState({
+        cart: [...newCart, itemFound[0]],
+      });
+    }
+
+    // this.updateCartTotal(newCart);
+  };
+
+  updateCartTotal = (cart) => {
+    console.log("cart", cart);
+    var total = 0;
+    for (let i = 0; i < cart.length; i++) {
+      total = total + cart[i].qty * cart[i].price;
+    }
+
+    this.setState({
+      cartTotal: total,
     });
   };
 
@@ -41,6 +102,10 @@ class Routing extends Component {
     const CareersPage = () => {
       return <CareersListing careers={this.props.careers} />;
     };
+
+    const CheckOutPage = () => {
+      return <CheckOut />;
+    };
     return (
       <React.Fragment>
         <Navbar
@@ -49,11 +114,16 @@ class Routing extends Component {
           registerUser={this.props.registerUser}
           logoutUser={this.props.logoutUser}
           cart={this.state.cart}
-          removeProduct={this.removeProduct}
+          cartTotal={this.state.cartTotal}
+          wishlist={this.state.wishlist}
+          addToCartFromWishList={this.addToCartFromWishList}
+          removeFromCart={this.removeFromCart}
+          removeFromWishList={this.removeFromWishList}
         />
         <Switch>
           <Route exact path="/collections/mens" component={ProductsMenPage} />
           <Route exact path="/careers" component={CareersPage} />
+          <Route exact path="/checkout" component={CheckOutPage} />
           <Redirect to="/" />
         </Switch>
         <Footer />

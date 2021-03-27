@@ -12,13 +12,15 @@ import {
 import PromoBanner from "./PromoBanner";
 import "../../css/Theme.css";
 import LoginModal from "../Auth";
-import Cart from "../CartModal";
+import CartModal from "../CartModal";
+import WishListModal from "../WishlistModal";
 
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginOpen, toggleLoginModal] = useState(false);
   const [isRegisterOpen, toggleRegisterModal] = useState(false);
   const [isCartOpen, toggleCartModal] = useState(false);
+  const [isWishListOpen, toggleWishListModal] = useState(false);
   const [isProductOpen, setProduct] = useState(false);
   const [popOverProduct, setPopover] = useState(props.cart[0]);
 
@@ -40,6 +42,10 @@ const NavbarComponent = (props) => {
 
   const toggleCart = () => {
     toggleCartModal(!isCartOpen);
+  };
+
+  const toggleWishList = () => {
+    toggleWishListModal(!isWishListOpen);
   };
 
   const toggleProduct = (product) => {
@@ -133,7 +139,11 @@ const NavbarComponent = (props) => {
             >
               <i className="fa fa-shopping-cart" /> Cart
             </NavItem>
-            <NavItem className="mb-2 my-lg-auto ml-lg-2" role="button">
+            <NavItem
+              className="mb-2 my-lg-auto ml-lg-2"
+              role="button"
+              onClick={toggleWishList}
+            >
               <i className="fa fa-heart" /> Wishlist
             </NavItem>
             {!props.user ? (
@@ -165,14 +175,22 @@ const NavbarComponent = (props) => {
         submitLogin={submitLogin}
         submitRegister={submitRegister}
       />
-      <Cart
+      <CartModal
         cart={props.cart}
+        cartTotal={props.cartTotal}
         isModalOpen={isCartOpen}
         toggleCart={toggleCart}
         isProductOpen={isProductOpen}
         togglePopover={toggleProduct}
         product={popOverProduct}
-        removeFromCart={props.removeProduct}
+        removeFromCart={props.removeFromCart}
+      />
+      <WishListModal
+        wishlist={props.wishlist}
+        isModalOpen={isWishListOpen}
+        toggleWishList={toggleWishList}
+        removeFromWishList={props.removeFromWishList}
+        addToCartFromWishList={props.addToCartFromWishList}
       />
     </>
   );
