@@ -34,38 +34,47 @@ const Cart = ({
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              {cart.map((item) => (
-                <tr key={item.name + item.size}>
-                  <td
-                    style={{ cursor: "pointer" }}
-                    id={`product${item.id}`}
-                    onClick={() => togglePopover(item)}
-                  >
-                    <span className="mt-5">{item.name}</span>
-                  </td>
-                  <td>{item.size}</td>
-                  <td>{item.qty}</td>
-                  <td>${item.price * item.qty}</td>
-                  <td>
-                    <Button
-                      onClick={() => removeFromCart(item.id)}
-                      style={{ backgroundColor: "#e5e5f0" }}
+            {cart.length === 0 ? (
+              <div style={{ textAlign: "center" }}>
+                <i>Your cart is empty</i>
+              </div>
+            ) : (
+              <tbody>
+                {cart.map((item) => (
+                  <tr key={item.name + item.size}>
+                    <td
+                      style={{ cursor: "pointer" }}
+                      id={`product${item.id}`}
+                      onClick={() => togglePopover(item)}
                     >
-                      <i className="fa fa-trash" style={{ color: "#9f9ad8" }} />
-                    </Button>
+                      <span className="mt-5">{item.name}</span>
+                    </td>
+                    <td>{item.size}</td>
+                    <td>{item.qty}</td>
+                    <td>${item.price * item.qty}</td>
+                    <td>
+                      <Button
+                        onClick={() => removeFromCart(item.id)}
+                        style={{ backgroundColor: "#e5e5f0" }}
+                      >
+                        <i
+                          className="fa fa-trash"
+                          style={{ color: "#9f9ad8" }}
+                        />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <strong>Total ${cartTotal(cart).toFixed(2)}</strong>
                   </td>
                 </tr>
-              ))}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <strong>Total ${cartTotal.toFixed(2)}</strong>
-                </td>
-              </tr>
-            </tbody>
+              </tbody>
+            )}
           </Table>
           <Link to="/checkout" onClick={toggleCart}>
             <Button style={{ backgroundColor: "#e5e5f0", color: "black" }}>

@@ -1,4 +1,5 @@
-.navbar-main, .footer {
+.navbar-main,
+.footer {
   background-color: #e5e5f0;
 }
 
@@ -16,4 +17,10 @@
 .active {
   font-weight: 500;
   letter-spacing: 1px;
+}
+
+.video {
+  width: 130%;
+  height: 101%;
+  padding-right: 200px;
 }

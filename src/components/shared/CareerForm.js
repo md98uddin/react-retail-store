@@ -153,6 +153,7 @@ const RenderApplyModal = ({
                 <Button
                   style={{ backgroundColor: "#e5e5f0", color: "black" }}
                   type="submit"
+                  className="btn-hover-style"
                 >
                   Submit Application
                 </Button>

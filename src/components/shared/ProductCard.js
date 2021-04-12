@@ -16,6 +16,17 @@ import {
 
 const ProductCard = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [currentSize, setSize] = useState(null);
+
+  const changeSize = (event) => {
+    setSize(event.target.innerText);
+  };
+
+  const addProduct = (product) => {
+    product["size"] = currentSize;
+    props.addProductToCart(product);
+    console.log("product", product);
+  };
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   return (
@@ -41,6 +52,7 @@ const ProductCard = (props) => {
                   <DropdownItem
                     disabled={props.product.stock.split(",")[index] == 0}
                     key={size}
+                    onClick={changeSize}
                   >
                     {size}
                   </DropdownItem>
@@ -48,7 +60,9 @@ const ProductCard = (props) => {
               </DropdownMenu>
             </Dropdown>
             <Container className="mt-2">
-              <Button>Add To Cart</Button>
+              <Button onClick={() => addProduct(props.product)}>
+                Add To Cart
+              </Button>
               <Button className="mx-2">
                 <i className="fa fa-heart" />
               </Button>

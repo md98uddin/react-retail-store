@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { loginUser, logoutUser, registerUser } from "../redux/actions";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
+import HomePage from "./HomePage";
 import ProductsMen from "./ProductsMen";
 import CareersListing from "./CareersListing";
 import CheckOut from "./shared/Checkout";
@@ -78,25 +79,56 @@ class Routing extends Component {
         cart: [...newCart, itemFound[0]],
       });
     }
+  };
 
-    // this.updateCartTotal(newCart);
+  addProductToCart = (product) => {
+    const itemFound = this.state.cart.filter((item) => {
+      return item.id === product.id && item.size === product.size;
+    });
+
+    var newCart = null;
+
+    if (itemFound.length === 0) {
+      newCart = [...this.state.cart, product];
+
+      product.qty = 1;
+
+      this.setState({
+        cart: newCart,
+      });
+    } else {
+      itemFound[0].qty++;
+      newCart = this.state.cart.filter((item) => {
+        return item.id + item.size !== product.id + product.size;
+      });
+
+      this.setState({
+        cart: [...newCart, itemFound[0]],
+      });
+    }
   };
 
   updateCartTotal = (cart) => {
-    console.log("cart", cart);
     var total = 0;
     for (let i = 0; i < cart.length; i++) {
       total = total + cart[i].qty * cart[i].price;
     }
 
-    this.setState({
-      cartTotal: total,
-    });
+    return total;
   };
 
   render() {
+    const Home = () => {
+      return <HomePage />;
+    };
+
     const ProductsMenPage = () => {
-      return <ProductsMen products={this.props.products} />;
+      return (
+        <ProductsMen
+          products={this.props.products}
+          addProductToCart={this.addProductToCart}
+        />
+      );
     };
 
     const CareersPage = () => {
@@ -114,16 +146,18 @@ class Routing extends Component {
           registerUser={this.props.registerUser}
           logoutUser={this.props.logoutUser}
           cart={this.state.cart}
-          cartTotal={this.state.cartTotal}
+          updateCartTotal={this.updateCartTotal}
           wishlist={this.state.wishlist}
           addToCartFromWishList={this.addToCartFromWishList}
           removeFromCart={this.removeFromCart}
           removeFromWishList={this.removeFromWishList}
         />
         <Switch>
+          {/* <Route exact path="/" component={HomePage} /> */}
           <Route exact path="/collections/mens" component={ProductsMenPage} />
           <Route exact path="/careers" component={CareersPage} />
           <Route exact path="/checkout" component={CheckOutPage} />
+          <Route exact path="/" component={Home} />
           <Redirect to="/" />
         </Switch>
         <Footer />

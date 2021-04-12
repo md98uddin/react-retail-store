@@ -138,6 +138,7 @@ const NavbarComponent = (props) => {
               onClick={toggleCart}
             >
               <i className="fa fa-shopping-cart" /> Cart
+              {props.cart.length > 0 && `(${props.cart.length})`}
             </NavItem>
             <NavItem
               className="mb-2 my-lg-auto ml-lg-2"
@@ -177,7 +178,7 @@ const NavbarComponent = (props) => {
       />
       <CartModal
         cart={props.cart}
-        cartTotal={props.cartTotal}
+        cartTotal={props.updateCartTotal}
         isModalOpen={isCartOpen}
         toggleCart={toggleCart}
         isProductOpen={isProductOpen}

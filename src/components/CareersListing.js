@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RenderApplyModal from './shared/CareerForm'
+import RenderApplyModal from "./shared/CareerForm";
 import {
   Container,
   Card,
@@ -13,7 +13,6 @@ import {
   Alert,
 } from "reactstrap";
 
-
 const RenderCareers = ({ careers, toggleModal }) => {
   if (careers) {
     return careers.map((career) => (
@@ -26,7 +25,7 @@ const RenderCareers = ({ careers, toggleModal }) => {
             <CardText>Posted on {career.datePosted}</CardText>
             <CardSubtitle>{career.description}</CardSubtitle>
             <Button
-              className="mt-2"
+              className="mt-2 btn-hover-style"
               style={{ backgroundColor: "#e5e5f0", color: "black" }}
               onClick={() => toggleModal(career)}
             >
@@ -40,7 +39,6 @@ const RenderCareers = ({ careers, toggleModal }) => {
 
   return <Col />;
 };
-
 
 const RenderAlert = ({ role, alert }) => {
   if (alert) {
